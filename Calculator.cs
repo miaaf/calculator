@@ -1,17 +1,15 @@
-﻿using System; //by faraaj and miaaf
+using System; //by faraaj and miaaf (and quamozos)
 
 class Calculator
 {
     public static double Run(double num1, double num2, string op)
     {
-        // 
         switch (op)
         {
             case "+": return num1 + num2;
             case "-": return num1 - num2;
             case "*": return num1 * num2;
             case "/":
-                // != means not equal
                 if (num2 != 0)
                 {
                     return num1 / num2;
@@ -34,7 +32,32 @@ class Program
 
         while (!exit)
         {
-            string num1 = "";
+            Console.WriteLine("Enter your problem(ex: A + B)");
+            var karma = Console.ReadLine();
+            if (karma.IndexOf(' ') == -1) ThrowExceptionToConsole("Wrong format!");
+            var arr = karma.Split(' ');
+            if (arr.Length != 3) ThrowExceptionToConsole("Wrong format!");
+            ulong num1 = 0, num2 = 0, result = 0;
+            string op;
+            ulong.TryParse(arr[0], out num1);
+            ulong.TryParse(arr[2], out num2);
+            op = arr[1];
+            if (num1 == 0 || num2 == 0 || (op != "+" && op != "-" && op != "*" && op != "/"))
+                ThrowExceptionToConsole("Please write true arguments.");
+            result = Calculator.Run(num1, num2, op);
+            try
+            {
+                result = Calculator.Run(num1, num2, op);
+                if (double.IsNaN((double)result)) Console.WriteLine("This operation caused a mathematical error.\n");
+                else Console.WriteLine("Your result: {0:0.##}\n", result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred while calculating the result! \n: " + e.Message);
+            }
+            
+            //what the fuck is this code?
+            /*string num1 = "";
             string num2 = "";
             double result = 0;
 
@@ -80,16 +103,23 @@ class Program
             catch (Exception e)
             {
                 Console.WriteLine("An error occurred while calculating the result! \n: " + e.Message);
-            }
+            }*/
 
             Console.WriteLine("------------------------\n");
 
-            Console.Write("Press the ESC button to close the program.. ");
+            Console.Write("Press any key to continue or ESC to close program... ");
             if (Console.ReadKey().Key == ConsoleKey.Escape) exit = true;
 
-            Console.WriteLine("\n");
+            Console.WriteLine();
         }
         Console.WriteLine("The program was successfully closed. Please press any key.\n");
         Console.ReadKey();
+    }
+
+    static void ThrowExceptionToConsole(string message)
+    {
+        Console.WriteLine(message);
+        Console.ReadKey();
+        return;
     }
 }
