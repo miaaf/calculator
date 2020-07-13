@@ -36,14 +36,21 @@ class Program
             var karma = Console.ReadLine();
             if (karma.IndexOf(' ') == -1) ThrowExceptionToConsole("Wrong format!");
             var arr = karma.Split(' ');
-            if (arr.Length != 3) ThrowExceptionToConsole("Wrong format!");
+            if (arr.Length != 3) 
+            {
+                ThrowExceptionToConsole("Wrong format!");
+                goto SKIP_PROGRAM;
+            }
             double num1 = 0, num2 = 0, result = 0;
             string op;
             double.TryParse(arr[0], out num1);
             double.TryParse(arr[2], out num2);
             op = arr[1];
             if (num1 == 0 || num2 == 0 || (op != "+" && op != "-" && op != "*" && op != "/"))
+            {
                 ThrowExceptionToConsole("Please write true arguments.");
+                goto SKIP_PROGRAM;
+            }
             result = Calculator.Run(num1, num2, op);
             try
             {
@@ -54,6 +61,7 @@ class Program
             catch (Exception e)
             {
                 Console.WriteLine("An error occurred while calculating the result! \n: " + e.Message);
+                goto SKIP_PROGRAM;
             }
             
             //what the fuck is this code?
@@ -104,6 +112,8 @@ class Program
             {
                 Console.WriteLine("An error occurred while calculating the result! \n: " + e.Message);
             }*/
+            
+            SKIP_PROGRAM:
 
             Console.WriteLine("------------------------\n");
 
@@ -119,7 +129,7 @@ class Program
     static void ThrowExceptionToConsole(string message)
     {
         Console.WriteLine(message);
-        Console.ReadKey();
+        //Console.ReadKey();
         return;
     }
 }
