@@ -37,10 +37,10 @@ class Program
             if (karma.IndexOf(' ') == -1) ThrowExceptionToConsole("Wrong format!");
             var arr = karma.Split(' ');
             if (arr.Length != 3) ThrowExceptionToConsole("Wrong format!");
-            ulong num1 = 0, num2 = 0, result = 0;
+            double num1 = 0, num2 = 0, result = 0;
             string op;
-            ulong.TryParse(arr[0], out num1);
-            ulong.TryParse(arr[2], out num2);
+            double.TryParse(arr[0], out num1);
+            double.TryParse(arr[2], out num2);
             op = arr[1];
             if (num1 == 0 || num2 == 0 || (op != "+" && op != "-" && op != "*" && op != "/"))
                 ThrowExceptionToConsole("Please write true arguments.");
